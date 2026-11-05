@@ -1,0 +1,41 @@
+services:
+  mysql:
+    image: mysql:8.4
+
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: usuarios_api
+      MYSQL_USER: usuario_api
+      MYSQL_PASSWORD: root
+
+    ports:
+      - "127.0.0.1:3307:3306"
+
+    volumes:
+      - mysql_dados:/var/lib/mysql
+
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - 'MYSQL_PWD="$${MYSQL_PASSWORD}" mysql --protocol=TCP -h 127.0.0.1 -u "$${MYSQL_USER}" "$${MYSQL_DATABASE}" -e "SELECT 1"'
+      interval: 5s
+      timeout: 5s
+      retries: 20
+      start_period: 30s
+
+  api:
+    build: .
+
+    environment:
+      PORT: "3000"
+      DATABASE_URL: "mysql://usuario_api:root@mysql:3306/usuarios_api"
+
+    ports:
+      - "127.0.0.1:3000:3000"
+
+    depends_on:
+      mysql:
+        condition: service_healthy
+
+volumes:
+  mysql_dados:

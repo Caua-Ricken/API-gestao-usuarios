@@ -1,0 +1,30 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "mysql"
+}
+
+model Usuario {
+  id             Int       @id @default(autoincrement())
+  nome           String    @db.VarChar(100)
+  email          String    @unique @db.VarChar(191)
+  telefone       String?   @db.VarChar(20)
+  dataNascimento DateTime? @db.Date
+
+  cep            String?   @db.VarChar(9)
+  rua            String?   @db.VarChar(150)
+  numero         String?   @db.VarChar(20)
+  complemento    String?   @db.VarChar(100)
+  bairro         String?   @db.VarChar(100)
+  cidade         String?   @db.VarChar(100)
+  estado         String?   @db.Char(2)
+
+  ativo          Boolean   @default(true)
+  criadoEm       DateTime  @default(now())
+  atualizadoEm DateTime @default(now()) @updatedAt
+
+  @@map("usuarios")
+}
