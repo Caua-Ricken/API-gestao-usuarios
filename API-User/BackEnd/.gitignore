@@ -1,8 +1,9 @@
 node_modules/
 dist/
+coverage/
+
 .env
 .env.*
 !.env.example
-!.env.docker.example
-src/generated/
-*.log
+
+package-lock.backup.json

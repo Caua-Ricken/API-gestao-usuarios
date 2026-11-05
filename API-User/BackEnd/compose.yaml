@@ -3,13 +3,13 @@ services:
     image: mysql:8.4
 
     environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: usuarios_api
-      MYSQL_USER: usuario_api
-      MYSQL_PASSWORD: root
+      MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD}"
+      MYSQL_DATABASE: "${MYSQL_DATABASE}"
+      MYSQL_USER: "${MYSQL_USER}"
+      MYSQL_PASSWORD: "${MYSQL_PASSWORD}"
 
     ports:
-      - "127.0.0.1:3307:3306"
+      - "127.0.0.1:${MYSQL_PORT}:3306"
 
     volumes:
       - mysql_dados:/var/lib/mysql
@@ -28,10 +28,10 @@ services:
 
     environment:
       PORT: "3000"
-      DATABASE_URL: "mysql://usuario_api:root@mysql:3306/usuarios_api"
+      DATABASE_URL: "mysql://${MYSQL_USER}:${MYSQL_PASSWORD}@mysql:3306/${MYSQL_DATABASE}"
 
     ports:
-      - "127.0.0.1:3000:3000"
+      - "127.0.0.1:${PORT}:3000"
 
     depends_on:
       mysql:
