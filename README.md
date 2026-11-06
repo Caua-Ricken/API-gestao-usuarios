@@ -519,5 +519,3 @@ docker compose up -d --build
 
 Desenvolvido por **Cauã Ricken**.
 
-- [GitHub](https://github.com/Caua-Ricken)
-- [Portfólio](https://caua-ricken.github.io/portifolio-dev/)
